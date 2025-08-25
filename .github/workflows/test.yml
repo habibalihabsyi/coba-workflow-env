@@ -11,13 +11,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Buat file .env jika belum ada
-        run: |
-          touch .env
-
       - name: create .env file
         uses: appleboy/ssh-action@v0.1.10
-        if: github.ref == 'refs/heads/main'
         with:
           host: ${{ secrets.VPS_PRIVATE_IP }}
           username: ${{ secrets.VPS_USER_PRODUCTION }}
@@ -25,6 +20,7 @@ jobs:
           port: 8521
           script: |
             cd /home/itdev/coba-workflow-env
+            git pull
             add_or_update () {
               key=$1
               value=$2
