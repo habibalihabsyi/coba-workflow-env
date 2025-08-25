@@ -22,8 +22,9 @@ jobs:
           host: ${{ secrets.VPS_PRIVATE_IP }}
           username: ${{ secrets.VPS_USER_PRODUCTION }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          port: 22
+          port: 8521
           script: |
+            cd /home/itdev/coba-workflow-env
             add_or_update () {
               key=$1
               value=$2
