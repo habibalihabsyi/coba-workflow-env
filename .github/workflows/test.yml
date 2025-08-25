@@ -32,6 +32,6 @@ jobs:
                 echo "$key=$value" >> .env
               fi
             }
-            add_or_update "APP_ENV" "production"
-            add_or_update "APP_KEY" "newsecretkey"
-            add_or_update "DB_PASSWORD" "supersecret"
+            add_or_update "APP_ENV" {{ secrets.APP_ENV }}
+            add_or_update "APP_KEY" {{ secrets.APP_KEY }}
+            add_or_update "DB_PASSWORD" {{ secrets.DB_PASSWORD }}
