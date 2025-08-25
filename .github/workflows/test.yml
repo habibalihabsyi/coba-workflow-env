@@ -8,10 +8,7 @@ jobs:
   add-env-from-secrets:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: create .env file
+      - name: update .env file
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.VPS_PRIVATE_IP }}
