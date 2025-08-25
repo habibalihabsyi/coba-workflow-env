@@ -1,0 +1,40 @@
+name: Build and Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  add-env-from-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Buat file .env jika belum ada
+        run: |
+          touch .env
+
+      - name: create .env file
+        uses: appleboy/ssh-action@v0.1.10
+        if: github.ref == 'refs/heads/main'
+        with:
+          host: ${{ secrets.VPS_PRIVATE_IP }}
+          username: ${{ secrets.VPS_USER_PRODUCTION }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+            add_or_update () {
+              key=$1
+              value=$2
+              if grep -q "^$key=" .env; then
+                # Kalau sudah ada, update nilainya
+                sed -i "s|^$key=.*|$key=$value|" .env
+              else
+                # Kalau belum ada, tambahkan ke akhir file
+                echo "$key=$value" >> .env
+              fi
+            }
+            add_or_update "APP_ENV" "production"
+            add_or_update "APP_KEY" "newsecretkey"
+            add_or_update "DB_PASSWORD" "supersecret"
