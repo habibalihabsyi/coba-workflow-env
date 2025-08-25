@@ -35,3 +35,4 @@ jobs:
             add_or_update "APP_ENV" ${{ secrets.APP_ENV }}
             add_or_update "APP_KEY" ${{ secrets.APP_KEY }}
             add_or_update "DB_PASSWORD" ${{ secrets.DB_PASSWORD }}
+            add_or_update "CAPTCHA_KEY" ${{ secrets.CAPTCHA_KEY }}
